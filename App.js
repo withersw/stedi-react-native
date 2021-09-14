@@ -1,8 +1,6 @@
-import { BufferedConsole } from "jest-util";
 import React from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Card, ListItem, Button, Icon } from "react-native-elements";
-import { ScreenWidth } from "react-native-elements/dist/helpers";
 
 // import Icons from "./Icons";
 
@@ -40,7 +38,7 @@ function Setting() {
 
 function Icons() {
   return (
-    <View style={styles.icons}>
+    <View>
       <Card>
         <Card.Divider>
           <Image source={require("./image/ImproveBalance.png")}></Image>
@@ -98,7 +96,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  icons: {
-    display: "flex"
-  }
+
 });
