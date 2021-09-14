@@ -1,8 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { BufferedConsole } from "jest-util";
+import React from "react";
+import { StyleSheet, Text, View, Image } from "react-native";
+import { Card, ListItem, Button, Icon } from "react-native-elements";
+import { ScreenWidth } from "react-native-elements/dist/helpers";
 
-import Icons from "./Icons";
-
+// import Icons from "./Icons";
 
 export default function App() {
   return (
@@ -10,68 +12,93 @@ export default function App() {
       <Text>Open up App.js to start working on your app!</Text>
       <Bar />
       <Icons />
-      <Footer/>
+      <Footer />
     </View>
   );
 }
 
 function Bar() {
-  return(
-      <View>
-          <AppName />
-          <Setting />  
-      </View>
-  )
-}
-
-function AppName() {
-  return(
-      <View>
-          <Text>STEDI Balance</Text>
-      </View>
-  )
-}
-
-function Setting() {
-  return(
-      <View>
-          
-      </View>
-  )
-}
-
-function Footer() {
-  return(
-      <View>
-          <Policy />
-          <Terms />
-      </View>
+  return (
+    <View>
+      <AppName />
+      <Setting />
+    </View>
   );
 }
 
-
-function Policy() {
-  return(
-      <View>
-          
-      </View>
-  )
+function AppName() {
+  return (
+    <View>
+      <Text>STEDI Balance</Text>
+    </View>
+  );
 }
 
+function Setting() {
+  return <View></View>;
+}
+
+function Icons() {
+  return (
+    <View style={styles.icons}>
+      <Card>
+        <Card.Divider>
+          <Image source={require("./image/ImproveBalance.png")}></Image>
+        </Card.Divider>
+
+        <Card.Divider>
+          <Image source={require("./image/LearnAboutBalance.png")}></Image>
+        </Card.Divider>
+      </Card>
+
+      <Card>
+        <Card.Divider>
+          <Image source={require("./image/Profile.png")}></Image>
+        </Card.Divider>
+
+        <Card.Divider>
+          <Image source={require("./image/StatsandImprovement.png")}></Image>
+        </Card.Divider>
+      </Card>
+
+      <Card>
+        <Card.Divider>
+          <Image source={require("./image/STEDITimer.png")}></Image>
+        </Card.Divider>
+
+        <Card.Divider>
+          <Image source={require("./image/Tutorial.png")}></Image>
+        </Card.Divider>
+      </Card>
+    </View>
+  );
+}
+
+function Footer() {
+  return (
+    <View>
+      <Policy />
+      <Terms />
+    </View>
+  );
+}
+
+function Policy() {
+  return <View></View>;
+}
 
 function Terms() {
-  return(
-      <View>
-          
-      </View>
-  )
+  return <View></View>;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "green",
+    alignItems: "center",
+    justifyContent: "center",
   },
+  icons: {
+    display: "flex"
+  }
 });

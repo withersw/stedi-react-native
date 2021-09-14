@@ -8,7 +8,8 @@
     "react-native-components": "0.0.1",
     "react-native-elements": "^3.4.2",
     "react-native-vector-icons": "^8.1.0",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "yarn": "^1.22.11"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
