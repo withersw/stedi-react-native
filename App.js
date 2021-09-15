@@ -38,8 +38,8 @@ function Setting() {
 
 function Icons() {
   return (
-    <View>
-      <Card>
+    <View style={styles.icons}>
+      <Card style={styles.card}>
         <Card.Divider>
           <Image source={require("./image/ImproveBalance.png")}></Image>
         </Card.Divider>
@@ -47,19 +47,17 @@ function Icons() {
         <Card.Divider>
           <Image source={require("./image/LearnAboutBalance.png")}></Image>
         </Card.Divider>
-      </Card>
-
-      <Card>
+      
         <Card.Divider>
           <Image source={require("./image/Profile.png")}></Image>
         </Card.Divider>
+        </Card >
 
+<Card style={styles.card}>
         <Card.Divider>
           <Image source={require("./image/StatsandImprovement.png")}></Image>
         </Card.Divider>
-      </Card>
-
-      <Card>
+ 
         <Card.Divider>
           <Image source={require("./image/STEDITimer.png")}></Image>
         </Card.Divider>
@@ -96,5 +94,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  icons: {
+    flexDirection: "row",
+
+  },
+
+  card: {
+
+  }
 
 });
