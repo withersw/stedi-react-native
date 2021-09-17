@@ -1,6 +1,6 @@
-import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
 // import Icons from "./Icons";
 
@@ -41,29 +41,37 @@ function Icons() {
     <View style={styles.icons}>
       <Card style={styles.card}>
         <Card.Divider>
-          <Image source={require("./image/ImproveBalance.png")}></Image>
+          <Image source={require('./image/ImproveBalance.png')}></Image>
         </Card.Divider>
+      </Card>
 
+      <Card style={styles.card}>
         <Card.Divider>
-          <Image source={require("./image/LearnAboutBalance.png")}></Image>
+          <Image source={require('./image/LearnAboutBalance.png')}></Image>
         </Card.Divider>
-      
-        <Card.Divider>
-          <Image source={require("./image/Profile.png")}></Image>
-        </Card.Divider>
-        </Card >
+      </Card>
 
-<Card style={styles.card}>
+      <Card style={styles.card}>
         <Card.Divider>
-          <Image source={require("./image/StatsandImprovement.png")}></Image>
+          <Image source={require('./image/Profile.png')}></Image>
         </Card.Divider>
- 
-        <Card.Divider>
-          <Image source={require("./image/STEDITimer.png")}></Image>
-        </Card.Divider>
+      </Card>
 
+      <Card style={styles.card}>
         <Card.Divider>
-          <Image source={require("./image/Tutorial.png")}></Image>
+          <Image source={require('./image/StatsandImprovement.png')}></Image>
+        </Card.Divider>
+      </Card>
+
+      <Card style={styles.card}>
+        <Card.Divider>
+          <Image source={require('./image/STEDITimer.png')}></Image>
+        </Card.Divider>
+      </Card>
+
+      <Card style={styles.card}>
+        <Card.Divider>
+          <Image source={require('./image/Tutorial.png')}></Image>
         </Card.Divider>
       </Card>
     </View>
@@ -90,18 +98,19 @@ function Terms() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "green",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   icons: {
-    flexDirection: "row",
-
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   card: {
-
-  }
-
+    margin: '12em',
+  },
 });
