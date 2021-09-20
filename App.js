@@ -1,13 +1,12 @@
-import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { Card, ListItem, Button, Icon } from "react-native-elements";
+import React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
 // import Icons from "./Icons";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <Bar />
       <Icons />
       <Footer />
@@ -38,35 +37,34 @@ function Setting() {
 
 function Icons() {
   return (
-    <View>
-      <Card>
-        <Card.Divider>
-          <Image source={require("./image/ImproveBalance.png")}></Image>
-        </Card.Divider>
-
-        <Card.Divider>
-          <Image source={require("./image/LearnAboutBalance.png")}></Image>
-        </Card.Divider>
+    <View style={styles.icons}>
+      <Card style={styles.card}>
+          <Image source={require('./image/ImproveBalance.png')}></Image>
       </Card>
 
-      <Card>
-        <Card.Divider>
-          <Image source={require("./image/Profile.png")}></Image>
-        </Card.Divider>
+      <Card style={styles.card}>
+          <Image source={require('./image/LearnAboutBalance.png')}></Image>
 
-        <Card.Divider>
-          <Image source={require("./image/StatsandImprovement.png")}></Image>
-        </Card.Divider>
       </Card>
 
-      <Card>
-        <Card.Divider>
-          <Image source={require("./image/STEDITimer.png")}></Image>
-        </Card.Divider>
+      <Card style={styles.card}>
+          <Image source={require('./image/Profile.png')}></Image>
 
-        <Card.Divider>
-          <Image source={require("./image/Tutorial.png")}></Image>
-        </Card.Divider>
+      </Card>
+
+      <Card style={styles.card}>
+          <Image source={require('./image/StatsandImprovement.png')}></Image>
+
+      </Card>
+
+      <Card style={styles.card}>
+          <Image source={require('./image/STEDITimer.png')}></Image>
+
+      </Card>
+
+      <Card style={styles.card}>
+          <Image source={require('./image/Tutorial.png')}></Image>
+
       </Card>
     </View>
   );
@@ -92,9 +90,19 @@ function Terms() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "green",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
 
+  icons: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  card: {
+    margin: '12em',
+  },
 });
