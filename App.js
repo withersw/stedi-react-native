@@ -7,7 +7,6 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <Bar />
       <Icons />
       <Footer />
@@ -40,39 +39,32 @@ function Icons() {
   return (
     <View style={styles.icons}>
       <Card style={styles.card}>
-        <Card.Divider>
           <Image source={require('./image/ImproveBalance.png')}></Image>
-        </Card.Divider>
       </Card>
 
       <Card style={styles.card}>
-        <Card.Divider>
           <Image source={require('./image/LearnAboutBalance.png')}></Image>
-        </Card.Divider>
+
       </Card>
 
       <Card style={styles.card}>
-        <Card.Divider>
           <Image source={require('./image/Profile.png')}></Image>
-        </Card.Divider>
+
       </Card>
 
       <Card style={styles.card}>
-        <Card.Divider>
           <Image source={require('./image/StatsandImprovement.png')}></Image>
-        </Card.Divider>
+
       </Card>
 
       <Card style={styles.card}>
-        <Card.Divider>
           <Image source={require('./image/STEDITimer.png')}></Image>
-        </Card.Divider>
+
       </Card>
 
       <Card style={styles.card}>
-        <Card.Divider>
           <Image source={require('./image/Tutorial.png')}></Image>
-        </Card.Divider>
+
       </Card>
     </View>
   );
@@ -100,7 +92,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'green',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
 
   icons: {
