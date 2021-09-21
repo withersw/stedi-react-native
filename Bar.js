@@ -3,11 +3,11 @@ import View from 'react-native';
 import AppName from "./AppName";
 import Setting from "./Setting";
 
-function Bar() {
+function Bar(props) {
     return(
         <View>
-            <AppName />
-            <Setting />  
+            <AppName style={props.styles.appName}/>
+            <Setting styles={props.styles.setting}/>  
         </View>
     )
 }

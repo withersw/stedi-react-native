@@ -15,24 +15,31 @@ export default function App() {
 }
 
 function Bar() {
-  return (
-    <View>
-      <AppName />
-      <Setting />
-    </View>
-  );
+  return(
+      <View style={styles.bar}>
+          <AppName />
+          <Setting />  
+      </View>
+  )
 }
 
 function AppName() {
   return (
-    <View>
+    <View style={styles.appName}>
       <Text>STEDI Balance</Text>
     </View>
   );
 }
 
 function Setting() {
-  return <View></View>;
+  return(
+      <View>
+      <Button
+      title="Press me"
+      onPress={() => Alert.alert('Simple Button pressed')}
+    />
+      </View>
+  )
 }
 
 function Icons() {
@@ -104,5 +111,23 @@ const styles = StyleSheet.create({
 
   card: {
     margin: '12em',
+  },
+
+  appName: {
+    backgroundColor: 'white',
+    padding: 12,
+    width: '70%',
+
+  },
+
+  bar: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-evenly'
+
+  },
+
+  setting: {
+
   },
 });

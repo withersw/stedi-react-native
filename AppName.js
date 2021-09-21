@@ -1,11 +1,19 @@
-import React from "react";
+import React from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
 function AppName() {
-    return(
-        <div>
-            <h1>STEDI Balance</h1>
-        </div>
-    )
+  return (
+    <View style={styles.appName}>
+      <Text>STEDI Balances</Text>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  appName: {
+    backgroundColor: 'blue',
+    margin: '10',
+  },
+});
 
 export default AppName;

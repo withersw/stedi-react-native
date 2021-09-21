@@ -1,11 +1,14 @@
 import React from "react";
-import View from 'react-native';
+import {View, Button} from 'react-native';
 
-function Setting() {
+function Setting(props) {
     return(
-        <div>
-            
-        </div>
+        <View>
+        <Button
+        title="Press me"
+        onPress={() => Alert.alert('Simple Button pressed')}
+      />
+        </View>
     )
 }
 
