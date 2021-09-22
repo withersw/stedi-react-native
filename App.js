@@ -33,12 +33,12 @@ function AppName() {
 
 function Setting() {
   return(
-      <View>
-      <Button
-      title="Press me"
-      onPress={() => Alert.alert('Simple Button pressed')}
-    />
-      </View>
+    <View>
+    <Button
+    title="Press me"
+    onPress={() => Alert.alert('Simple Button pressed')}
+  />
+    </View>
   )
 }
 
@@ -79,7 +79,7 @@ function Icons() {
 
 function Footer() {
   return (
-    <View>
+    <View style={styles.footer}>
       <Policy />
       <Terms />
     </View>
@@ -87,7 +87,11 @@ function Footer() {
 }
 
 function Policy() {
-  return <View></View>;
+  return ( 
+  <View style={styles.policy}>
+    <Text>hi</Text>
+  </View>
+  );
 }
 
 function Terms() {
@@ -97,9 +101,9 @@ function Terms() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'green',
+    backgroundColor: '#66FF66',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
   },
 
   icons: {
@@ -115,19 +119,32 @@ const styles = StyleSheet.create({
 
   appName: {
     backgroundColor: 'white',
-    padding: 12,
-    width: '70%',
-
+    padding: '3%',
+    width: '70%',  
+    borderRadius: 10,
+    height: '30%',
   },
 
   bar: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent: 'space-evenly'
-
+    justifyContent: 'space-evenly',
+    backgroundColor: 'green',
+    height: '15%',
+    alignItems: 'center'
   },
 
   setting: {
 
   },
+  policy: {
+    backgroundColor: 'green',
+    width: '100%',
+    height: '100%',
+    padding: '6%',
+  },
+  footer: {
+    height: '10%',
+    width: '100%',
+  }
 });
