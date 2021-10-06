@@ -1,6 +1,6 @@
 # To install and run
-`npm install`
-`npm run ios`
+```npm install
+npm run ios```
 
 or
 
