@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../ReactNativeTest"
+		},
+		{
+			"path": "../stedi-react-native"
+		},
+		{
+			"path": "../stedi-test"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}

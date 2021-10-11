@@ -4,7 +4,9 @@ import { Card, ListItem, Button, Icon } from 'react-native-elements';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Timer from "./Timer.js";
-import SettingsScreen from "./SettingsScreen.js"
+import SettingsScreen from "./SettingsScreen.js";
+import Home from "./Home.js";
+
 
 // import Icons from "./Icons";
 const Tab = createBottomTabNavigator();
@@ -14,9 +16,9 @@ export default function App() {
     <NavigationContainer styles={styles.container}>
       <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
         <Tab.Screen key="1" name="Timer" component={Timer} />
-        <Tab.Screen key="2" name="Settings" component={SettingsScreen} />
+        <Tab.Screen key="2" name="Settings" component={SettingsScreen} />        
+        <Tab.Screen key="3" name="Home" component={Home}/>
       </Tab.Navigator>
-
     </NavigationContainer>
   );
 }
@@ -99,41 +101,6 @@ function Setting() {
   />
     </View>
   )
-}
-
-function Icons() {
-  return (
-    <View style={styles.icons}>
-      <Card style={styles.card}>
-          <Image source={require('./image/ImproveBalance.png')}></Image>
-      </Card>
-
-      <Card style={styles.card}>
-          <Image source={require('./image/LearnAboutBalance.png')}></Image>
-
-      </Card>
-
-      <Card style={styles.card}>
-          <Image source={require('./image/Profile.png')}></Image>
-
-      </Card>
-
-      <Card style={styles.card}>
-          <Image source={require('./image/StatsandImprovement.png')}></Image>
-
-      </Card>
-
-      <Card style={styles.card}>
-          <Image source={require('./image/STEDITimer.png')}></Image>
-
-      </Card>
-
-      <Card style={styles.card}>
-          <Image source={require('./image/Tutorial.png')}></Image>
-
-      </Card>
-    </View>
-  );
 }
 
 function Footer() {
