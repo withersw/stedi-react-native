@@ -13,19 +13,17 @@ export default function App() {
   return (
     <NavigationContainer styles={styles.container}>
       <Tab.Navigator tabBar={(props) => <MyTabBar {...props} />}>
-        <Tab.Screen name="Timer" component={Timer} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen key="1" name="Timer" component={Timer} />
+        <Tab.Screen key="2" name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
-      <Bar />
-      <Icons />
-      <Footer />
+
     </NavigationContainer>
   );
 }
 
 function MyTabBar({ state, descriptors, navigation }) {
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={styles.bar}>
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
         const label =
