@@ -1,14 +1,18 @@
-import React from "react";
-import {View, Text} from "react-native";
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 
 const SettingsScreen = () => {
-    return(
-        <View >
-            <Text>Setting</Text>
-        </View>
-    )
-}
-
-
+  return (
+    <View style={styles.background}>
+      <Text>Settings</Text>
+    </View>
+  );
+};
 
 export default SettingsScreen;
+
+const styles = StyleSheet.create({
+  background: {
+    backgroundColor: 'black',
+  },
+});

@@ -1,14 +1,12 @@
-import React from "react";
-import {View, Text} from "react-native";
+import React from 'react';
+import { View, Text } from 'react-native';
 
 const Timer = () => {
-    return(
-        <View >
-            <Text>Timer</Text>
-        </View>
-    )
-}
-
-
+  return (
+    <View>
+      <Text>Timer</Text>
+    </View>
+  );
+};
 
 export default Timer;
