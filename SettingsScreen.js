@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const SettingsScreen = () => {
   return (
-    <View style={styles.background}>
+    <View >
       <Text>Settings</Text>
     </View>
   );
@@ -12,7 +12,5 @@ const SettingsScreen = () => {
 export default SettingsScreen;
 
 const styles = StyleSheet.create({
-  background: {
-    backgroundColor: 'black',
-  },
+
 });

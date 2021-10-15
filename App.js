@@ -7,6 +7,7 @@ import SettingsScreen from './SettingsScreen.js';
 import Home from './Home.js';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // import Icons from "./Icons";
 const Tab = createMaterialBottomTabNavigator();
@@ -16,8 +17,8 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator
         initialRouteName='Home'
-        activeColor='#e91e63'
-        barStyle={{ backgroundColor: 'tomato' }}
+        activeColor='white'
+        barStyle={{ backgroundColor: 'green' }}
       >
         <Tab.Screen
           name='Home'
@@ -45,7 +46,7 @@ export default function App() {
           options={{
             tabBarLabel: 'Settings',
             tabBarIcon: ({ color }) => (
-              <MaterialCommunityIcons name='account' color={color} size={26} />
+              <FontAwesome name='gear' color={color} size={26} />
             ),
           }}
         />
