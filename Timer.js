@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Pedometer from 'expo-sensors';
 
 export default Timer = () => {
-  const [pastStepCount] = useState(0);
-
-  const [currentStepCount] = useState('checking');
+  const [pastStepCount, setPastStepCount] = useState(0);
+  const [currentStepCount, setCurrentStepCount] = useState('checking');
+  const [isPedometerAvailable, setIsPedometerAvailable] = useState('false');
 
 
   useEffect(() => {
@@ -16,19 +16,31 @@ export default Timer = () => {
     };
   });
 
-  _subscribe = () => {
+
+
+    return (
+      <View style={styles.container}>
+        <Text>
+          Pedometer.isAvailableAsync(): {isPedometerAvailable}
+        </Text>
+        <Text>Steps taken in the last 24 hours: {pastStepCount}</Text>
+        <Text>Walk! And watch this go up: {currentStepCount}</Text>
+      </View>
+    );
+  };
+
+
+  _subscribe = async () => {
     _subscription = Pedometer.watchStepCount((result) => {
-      currentStepCount = result.steps;
+      setCurrentStepCount(result.steps);
     });
 
     try {
       result = await Pedometer.isAvailableAsync();
-      isPedometerAvailable = String(result);
+      setIsPedometerAvailable(String(result));
     } 
     catch (error) {
-      this.setState({
-        isPedometerAvailable: 'Could not get isPedometerAvailable: ' + error,
-      });
+      setIsPedometerAvailable('Could not get isPedometerAvailable: ' + error);
     }
     
 
@@ -39,38 +51,17 @@ export default Timer = () => {
 
     try{
       result = await Pedometer.getStepCountAsync(start, end);
-      this.setState({ pastStepCount: result.steps });
+      setPastStepCount(result.steps);
     }
     catch (error) {
-      this.setState({
-        pastStepCount: 'Could not get stepCount: ' + error,
-      });
+      setPastStepCount('Could not get stepCount: ' + error);
     }
-
-
-
-
-
-
-
-    
+  } 
     _unsubscribe = () => {
-      this._subscription && this._subscription.remove();
-      this._subscription = null;
+      _subscription && _subscription.remove();
+      _subscription = null;
     };
-
-    return (
-      <View style={styles.container}>
-        <Text>
-          Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}
-        </Text>
-        <Text>Steps taken in the last 24 hours: {this.state.pastStepCount}</Text>
-        <Text>Walk! And watch this go up: {this.state.currentStepCount}</Text>
-      </View>
-    );
-  };
-};
-
+      
 const styles = StyleSheet.create({
   container: {
     flex: 1,

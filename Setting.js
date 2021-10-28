@@ -15,4 +15,4 @@ function Setting() {
     )
   }
 
-export default Setting
+export default Setting;
