@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Pedometer from 'expo-sensors';
+import {Pedometer} from 'expo-sensors';
 
 export default Timer = () => {
   const [pastStepCount, setPastStepCount] = useState(0);
@@ -8,29 +8,7 @@ export default Timer = () => {
   const [isPedometerAvailable, setIsPedometerAvailable] = useState('false');
 
 
-  useEffect(() => {
-    _subscribe();
-
-    return () => {
-      _unsubscribe();
-    };
-  });
-
-
-
-    return (
-      <View style={styles.container}>
-        <Text>
-          Pedometer.isAvailableAsync(): {isPedometerAvailable}
-        </Text>
-        <Text>Steps taken in the last 24 hours: {pastStepCount}</Text>
-        <Text>Walk! And watch this go up: {currentStepCount}</Text>
-      </View>
-    );
-  };
-
-
-  _subscribe = async () => {
+  useEffect(async() => {
     _subscription = Pedometer.watchStepCount((result) => {
       setCurrentStepCount(result.steps);
     });
@@ -56,12 +34,27 @@ export default Timer = () => {
     catch (error) {
       setPastStepCount('Could not get stepCount: ' + error);
     }
-  } 
-    _unsubscribe = () => {
+
+    return () => {
       _subscription && _subscription.remove();
       _subscription = null;
     };
-      
+  });
+
+
+
+    return (
+      <View style={styles.container}>
+        <Text>
+          Pedometer.isAvailableAsync(): {isPedometerAvailable}
+        </Text>
+        <Text>Steps taken in the last 24 hours: {pastStepCount}</Text>
+        <Text>Walk! And watch this go up: {currentStepCount}</Text>
+      </View>
+    );
+  };
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
