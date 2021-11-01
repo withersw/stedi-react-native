@@ -8,7 +8,7 @@ export default Timer = () => {
   const [isPedometerAvailable, setIsPedometerAvailable] = useState('false');
 
 
-  useEffect(async() => {
+  useEffect(() => {(async() => {
     _subscription = Pedometer.watchStepCount((result) => {
       setCurrentStepCount(result.steps);
     });
@@ -35,11 +35,15 @@ export default Timer = () => {
       setPastStepCount('Could not get stepCount: ' + error);
     }
 
-    return () => {
-      _subscription && _subscription.remove();
-      _subscription = null;
-    };
-  });
+
+  })();
+
+  return () => {
+    _subscription && _subscription.remove();
+    _subscription = null;
+  };
+
+});
 
 
 
