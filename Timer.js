@@ -4,13 +4,13 @@ import {Pedometer} from 'expo-sensors';
 
 export default Timer = () => {
   const [pastStepCount, setPastStepCount] = useState(0);
-  const [currentStepCount, setCurrentStepCount] = useState('checking');
+  const [currentStepCount, setCurrentStepCount] = useState(0);
   const [isPedometerAvailable, setIsPedometerAvailable] = useState('false');
 
 
   useEffect(() => {(async() => {
     _subscription = Pedometer.watchStepCount((result) => {
-      setCurrentStepCount(result.steps);
+      setCurrentStepCount(currentStepCount+result.steps);
     });
 
     try {
