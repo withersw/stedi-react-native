@@ -21,8 +21,7 @@ export default function App() {
 
   const _subscribe = () => {
     (async ()=>{
-      const availableResult = await Accelerometer.isAvailableAsync();
-      setAvailable(availableResult);
+      setAvailable(await Accelerometer.isAvailableAsync());
     })();//check if Acceleromoter is available
 
     setSubscription(
