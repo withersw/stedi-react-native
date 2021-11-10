@@ -8,6 +8,7 @@ export default function SettingsScreen() {
     y: 0,
     z: 0,
   });
+  const startTime = new Date().getTime();
   const [subscription, setSubscription] = useState(null);
 
   const _slow = () => {
@@ -20,7 +21,7 @@ export default function SettingsScreen() {
 
   const _subscribe = () => {
     (async ()=>{
-      setAvailable(await Accelerometer.isAvailableAsync());
+    await Accelerometer.isAvailableAsync();//this seems to initialize the Accelerometer for Android
     })();//check if Acceleromoter is available
 
     setSubscription(
@@ -41,6 +42,7 @@ export default function SettingsScreen() {
   }, []);
 
   const { x, y, z } = data;
+  console.log(new Date().getTime()+","+x+","+y+","+z);
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Accelerometer: (in Gs where 1 G = 9.81 m s^-2)</Text>
