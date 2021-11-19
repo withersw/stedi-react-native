@@ -1,8 +1,5 @@
 # To install and run
 `npm install`
 
-`npm run ios`
+`npm start`
 
-or
-
-`npm run android`
