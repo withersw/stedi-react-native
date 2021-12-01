@@ -20,12 +20,12 @@ export default function SettingsScreen() {
   };
 
   const _subscribe = () => {
-    (async ()=>{
-    await Accelerometer.isAvailableAsync();//this seems to initialize the Accelerometer for Android
-    })();//check if Acceleromoter is available
+    (async () => {
+      await Accelerometer.isAvailableAsync(); //this seems to initialize the Accelerometer for Android
+    })(); //check if Acceleromoter is available
 
     setSubscription(
-      Accelerometer.addListener(accelerometerData => {
+      Accelerometer.addListener((accelerometerData) => {
         setData(accelerometerData);
       })
     );
@@ -42,18 +42,28 @@ export default function SettingsScreen() {
   }, []);
 
   const { x, y, z } = data;
-  console.log(new Date().getTime()+","+x+","+y+","+z);
+  // console.log(new Date().getTime()+","+x+","+y+","+z);
+  let total_amount_xyz = Math.abs(x) + Math.abs(y) + Math.abs(z);
+  console.log(total_amount_xyz);
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Accelerometer: (in Gs where 1 G = 9.81 m s^-2)</Text>
+      <Text style={styles.text}>
+        Accelerometer: (in Gs where 1 G = 9.81 m s^-2)
+      </Text>
       <Text style={styles.text}>
         x: {round(x)} y: {round(y)} z: {round(z)}
       </Text>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={subscription ? _unsubscribe : _subscribe} style={styles.button}>
+        <TouchableOpacity
+          onPress={subscription ? _unsubscribe : _subscribe}
+          style={styles.button}
+        >
           <Text>{subscription ? 'On' : 'Off'}</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={_slow} style={[styles.button, styles.middleButton]}>
+        <TouchableOpacity
+          onPress={_slow}
+          style={[styles.button, styles.middleButton]}
+        >
           <Text>Slow</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={_fast} style={styles.button}>
