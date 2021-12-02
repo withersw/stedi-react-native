@@ -11,12 +11,16 @@ export default function SettingsScreen() {
   const startTime = new Date().getTime();
   const [subscription, setSubscription] = useState(null);
 
+  //Android Docs: The data delay (or sampling rate) controls the interval at which sensor events are sent to your application via the onSensorChanged() callback method. The default data delay is suitable for monitoring typical screen orientation changes and uses a delay of 200,000 microseconds. You can specify other data delays, such as SENSOR_DELAY_GAME (20,000 microsecond delay), SENSOR_DELAY_UI (60,000 microsecond delay), or SENSOR_DELAY_FASTEST (0 microsecond delay).   
+  // https://developer.android.com/guide/topics/sensors/sensors_overview#java
+
+  //Unable to find the default update interval, however the game play rate in Android is 20 millisecond intervals
   const _slow = () => {
     Accelerometer.setUpdateInterval(1000);
   };
 
   const _fast = () => {
-    Accelerometer.setUpdateInterval(16);
+    Accelerometer.setUpdateInterval(20);
   };
 
   const _subscribe = () => {
@@ -38,6 +42,7 @@ export default function SettingsScreen() {
 
   useEffect(() => {
     _subscribe();
+    Accelerometer.setUpdateInterval(20);
     return () => _unsubscribe();
   }, []);
 
