@@ -10,7 +10,7 @@ export default function Counter() {
   });
   const startTime = new Date().getTime();
   const [subscription, setSubscription] = useState(null);
-  const [newAccelerationData, setNewAccelerationData] = useState([]);
+  const [recentAccelerationData, setRecentAccelerationData] = useState([]);
 
   //Android Docs: The data delay (or sampling rate) controls the interval at which sensor events are sent to your application via the onSensorChanged() callback method. The default data delay is suitable for monitoring typical screen orientation changes and uses a delay of 200,000 microseconds. You can specify other data delays, such as SENSOR_DELAY_GAME (20,000 microsecond delay), SENSOR_DELAY_UI (60,000 microsecond delay), or SENSOR_DELAY_FASTEST (0 microsecond delay).
   // https://developer.android.com/guide/topics/sensors/sensors_overview#java
@@ -35,7 +35,7 @@ export default function Counter() {
         const { x, y, z } = data;
         let total_amount_xyz = Math.sqrt(x * x + y * y + z * z) * 9.81;
         console.log(new Date().getTime()+","+total_amount_xyz);
-        setNewAccelerationData([...newAccelerationData, total_amount_xyz]);
+        setRecentAccelerationData([...newAccelerationData, total_amount_xyz]);
       })
     );
   };
