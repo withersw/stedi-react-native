@@ -34,12 +34,17 @@ export default function Counter() {
     setSubscription( 
       Accelerometer.addListener((accelerometerData) => {
         setData(accelerometerData);
-        const { x, y, z } = data;
-        let total_amount_xyz = Math.sqrt(x * x + y * y + z * z) * 9.81;
+        let { x, y, z } = data;
+        //x = round(x); y=round(y); z=round(z);
+        console.log("x: "+x.toFixed(4)+" y:"+y+" z:"+z);
+        let total_amount_xyz = Math.sqrt(x * x);// + round(y) * round(y) + round(z) * round(z)) * 9.81;
+        console.log("Square Root of 4: "+Math.sqrt(4));
         console.log(new Date().getTime()+","+total_amount_xyz);
-        setRecentAccelerationData([...recentAccelerationData, total_amount_xyz]);
-        if ((recentAccelerationData.length % 4 ) = 0){
-          setSteps(getSpikesFromAccelerometer(recentAccelerationData));
+        if (recentAccelerationData.length>10){
+          setSteps(steps+getSpikesFromAccelerometer(recentAccelerationData));
+          setRecentAccelerationData([]);
+        } else{
+          setRecentAccelerationData(...recentAccelerationData, total_amount_xyz);
         }
       })
     );
@@ -63,7 +68,7 @@ export default function Counter() {
         Accelerometer: (in Gs where 1 G = 9.81 m s^-2)
       </Text>
       <Text style={styles.text}>
-        x: {round(x)} y: {round(y)} z: {round(z)}
+       steps: {steps} x: {round(x)} y: {round(y)} z: {round(z)}
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity

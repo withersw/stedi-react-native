@@ -42,7 +42,7 @@ const getSpikesFromAccelerometer = (recentAccelerationData, threshold = 11) =>{
     let previousValue = 0;//this is not a real value
     let previousTime = 0;//this is not a real time
     let previousHighPointTime = 0;
-    recentAccelerationData.foreach((accelerationDatum) => {
+    recentAccelerationData.forEach((accelerationDatum) => {
         
         if (accelerationDatum.value > previousValue && previousValue!=0){
             goingUp = true;
