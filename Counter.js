@@ -5,7 +5,7 @@ import getSpikesFromAccelerometer from './utils/StepCalculator';
 
 
 export default function Counter() {
-  const [data, setData] = useState({
+  const data = useRef({
     x: 0,
     y: 0,
     z: 0,
@@ -35,17 +35,18 @@ export default function Counter() {
 
     setSubscription( //we set this state variable so later we can use it to unsubscribe
       Accelerometer.addListener((accelerometerData) => {
-        setData(accelerometerData);
-        const { x, y, z } = data;
+        data.current=accelerometerData;
+        const { x, y, z } = data.current;
         //console.log("x: "+x+" y:"+y+" z:"+z);
         let total_amount_xyz = Math.sqrt(x * x+ y*y + z*z) * 9.81;
+        console.log(new Date().getTime()+","+total_amount_xyz);
         console.log("Steps: "+steps.current.length);
         if (recentAccelerationData.current.length>10){
-          steps.current=steps.current+getSpikesFromAccelerometer(recentAccelerationData.current);
+          steps.current=steps.current+getSpikesFromAccelerometer(recentAccelerationData.current).length;
           recentAccelerationData.current=[];
         } else{
           console.log("RecentAccelerationData: "+JSON.stringify(recentAccelerationData.current));
-          recentAccelerationData.current=[...recentAccelerationData.current, total_amount_xyz];
+          recentAccelerationData.current.push({time: new Date().getTime(), value: total_amount_xyz});
           
         }
       })
@@ -63,20 +64,17 @@ export default function Counter() {
     return () => _unsubscribe();
   }, []);
 
-  const { x, y, z } = data;
+  const { x, y, z } = data.current;
   //console.log("x: "+x+" y:"+y+" z:"+z);
   let total_amount_xyz = Math.sqrt(x * x+ y*y + z*z) * 9.81;
         
-  console.log(new Date().getTime()+","+total_amount_xyz);
+
 
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-        Accelerometer: (in Gs where 1 G = 9.81 m s^-2)
-      </Text>
-      <Text style={styles.text}>
-       x: {round(x)} y: {round(y)} z: {round(z)}
+       steps: {steps.current}
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
