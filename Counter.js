@@ -42,7 +42,11 @@ export default function Counter() {
         console.log(new Date().getTime()+","+total_amount_xyz);
         console.log("Steps: "+steps.current.length);
         if (recentAccelerationData.current.length>10){
-          steps.current=steps.current+getSpikesFromAccelerometer(recentAccelerationData.current).length;
+          const spikes = getSpikesFromAccelerometer(recentAccelerationData.current);
+          console.log("Spikes: "+JSON.stringify(spikes)+ " with length: "+spikes.length);
+          console.log("Steps before: "+steps.current.length);
+          steps.current=steps.current.concat(spikes);
+          console.log("Steps after: "+steps.current.length);
           recentAccelerationData.current=[];
         } else{
           console.log("RecentAccelerationData: "+JSON.stringify(recentAccelerationData.current));
@@ -74,7 +78,7 @@ export default function Counter() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-       steps: {steps.current}
+       steps: {steps.current.length}
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
