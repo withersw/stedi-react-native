@@ -1,4 +1,5 @@
 const getSpikesFromAccelerometer = (recentAccelerationData, threshold = 11) =>{
+    console.log("Spike Calculator Called");
     const overThresholdSpikes = [];//the acceleration data, often look like the following, can you find the spike(s) over the default threshold
 /*
 [
@@ -46,6 +47,7 @@ const getSpikesFromAccelerometer = (recentAccelerationData, threshold = 11) =>{
         
         if (accelerationDatum.value > previousValue && previousValue!=0){
             goingUp = true;
+            console.log("Going UP: "+goingUp );
         } else {
             if (goingUp=true && previousTime !=0 && (previousHighPointTime !=0 && accelerationDatum.time-previousHighPointTime > 400) && previousValue > threshold){
                 overThresholdSpikes.push(accelerationDatum);

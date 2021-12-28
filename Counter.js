@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Accelerometer } from 'expo-sensors';
 import getSpikesFromAccelerometer from './utils/StepCalculator';
+
 
 export default function Counter() {
   const [data, setData] = useState({
@@ -11,8 +12,9 @@ export default function Counter() {
   });
   const startTime = new Date().getTime();
   const [subscription, setSubscription] = useState(null);
-  const [recentAccelerationData, setRecentAccelerationData] = useState([]);
-  const [steps, setSteps] = useState([]);
+  const recentAccelerationData = useRef([]);//useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
+  const steps = useRef([]);//useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
+
 
   //Android Docs: The data delay (or sampling rate) controls the interval at which sensor events are sent to your application via the onSensorChanged() callback method. The default data delay is suitable for monitoring typical screen orientation changes and uses a delay of 200,000 microseconds. You can specify other data delays, such as SENSOR_DELAY_GAME (20,000 microsecond delay), SENSOR_DELAY_UI (60,000 microsecond delay), or SENSOR_DELAY_FASTEST (0 microsecond delay).
   // https://developer.android.com/guide/topics/sensors/sensors_overview#java
@@ -31,20 +33,20 @@ export default function Counter() {
       await Accelerometer.isAvailableAsync(); //this seems to initialize the Accelerometer for Android
     })(); //check if Acceleromoter is available
 
-    setSubscription( 
+    setSubscription( //we set this state variable so later we can use it to unsubscribe
       Accelerometer.addListener((accelerometerData) => {
         setData(accelerometerData);
-        let { x, y, z } = data;
-        //x = round(x); y=round(y); z=round(z);
-        console.log("x: "+x.toFixed(4)+" y:"+y+" z:"+z);
-        let total_amount_xyz = Math.sqrt(x * x);// + round(y) * round(y) + round(z) * round(z)) * 9.81;
-        console.log("Square Root of 4: "+Math.sqrt(4));
-        console.log(new Date().getTime()+","+total_amount_xyz);
-        if (recentAccelerationData.length>10){
-          setSteps(steps+getSpikesFromAccelerometer(recentAccelerationData));
-          setRecentAccelerationData([]);
+        const { x, y, z } = data;
+        //console.log("x: "+x+" y:"+y+" z:"+z);
+        let total_amount_xyz = Math.sqrt(x * x+ y*y + z*z) * 9.81;
+        console.log("Steps: "+steps.current.length);
+        if (recentAccelerationData.current.length>10){
+          steps.current=steps.current+getSpikesFromAccelerometer(recentAccelerationData.current);
+          recentAccelerationData.current=[];
         } else{
-          setRecentAccelerationData(...recentAccelerationData, total_amount_xyz);
+          console.log("RecentAccelerationData: "+JSON.stringify(recentAccelerationData.current));
+          recentAccelerationData.current=[...recentAccelerationData.current, total_amount_xyz];
+          
         }
       })
     );
@@ -57,18 +59,24 @@ export default function Counter() {
 
   useEffect(() => {
     _subscribe();
-    Accelerometer.setUpdateInterval(100);
+    Accelerometer.setUpdateInterval(1000);
     return () => _unsubscribe();
   }, []);
 
   const { x, y, z } = data;
+  //console.log("x: "+x+" y:"+y+" z:"+z);
+  let total_amount_xyz = Math.sqrt(x * x+ y*y + z*z) * 9.81;
+        
+  console.log(new Date().getTime()+","+total_amount_xyz);
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
         Accelerometer: (in Gs where 1 G = 9.81 m s^-2)
       </Text>
       <Text style={styles.text}>
-       steps: {steps} x: {round(x)} y: {round(y)} z: {round(z)}
+       x: {round(x)} y: {round(y)} z: {round(z)}
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
