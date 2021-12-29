@@ -14,7 +14,7 @@ export default function Counter() {
   const [subscription, setSubscription] = useState(null);
   const recentAccelerationData = useRef([]);//useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
   const steps = useRef([]);//useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
-
+  const previousHighPointTimeRef = useRef(0);//this is the most recent time we had a spike in acceleration, we initialize it to 0 meaning none
 
   //Android Docs: The data delay (or sampling rate) controls the interval at which sensor events are sent to your application via the onSensorChanged() callback method. The default data delay is suitable for monitoring typical screen orientation changes and uses a delay of 200,000 microseconds. You can specify other data delays, such as SENSOR_DELAY_GAME (20,000 microsecond delay), SENSOR_DELAY_UI (60,000 microsecond delay), or SENSOR_DELAY_FASTEST (0 microsecond delay).
   // https://developer.android.com/guide/topics/sensors/sensors_overview#java
@@ -41,8 +41,9 @@ export default function Counter() {
         let total_amount_xyz = Math.sqrt(x * x+ y*y + z*z) * 9.81;
         console.log(new Date().getTime()+","+total_amount_xyz);
         console.log("Steps: "+steps.current.length);
-        if (recentAccelerationData.current.length>10){
-          const spikes = getSpikesFromAccelerometer(recentAccelerationData.current);
+        if (recentAccelerationData.current.length>20){
+          const {spikes, previousHighPointTime} = getSpikesFromAccelerometer(recentAccelerationData.current, 11, previousHighPointTimeRef.current);
+          previousHighPointTimeRef.current = previousHighPointTimeRef;
           console.log("Spikes: "+JSON.stringify(spikes)+ " with length: "+spikes.length);
           console.log("Steps before: "+steps.current.length);
           steps.current=steps.current.concat(spikes);
@@ -63,8 +64,8 @@ export default function Counter() {
   };
 
   useEffect(() => {
-    _subscribe();
-    Accelerometer.setUpdateInterval(1000);
+    //_subscribe();
+    Accelerometer.setUpdateInterval(100);
     return () => _unsubscribe();
   }, []);
 
@@ -85,7 +86,7 @@ export default function Counter() {
           onPress={subscription ? _unsubscribe : _subscribe}
           style={styles.button}
         >
-          <Text>{subscription ? 'On' : 'Off'}</Text>
+          <Text>{subscription ? 'Stop' : 'Start'}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

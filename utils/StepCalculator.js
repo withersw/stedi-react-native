@@ -1,4 +1,4 @@
-const getSpikesFromAccelerometer = (recentAccelerationData, threshold = 11) =>{
+const getSpikesFromAccelerometer = (recentAccelerationData, threshold, previousHighPointTime) =>{
     console.log("Spike Calculator Called");
     const overThresholdSpikes = [];//the acceleration data, often look like the following, can you find the spike(s) over the default threshold
 /*
@@ -41,8 +41,9 @@ const getSpikesFromAccelerometer = (recentAccelerationData, threshold = 11) =>{
 
     let goingUp=false;//when we stop going up, we have hit a spike
     let previousValue = 0;//this is not a real value
-    let previousTime = 0;//this is not a real time
-    let previousHighPointTime = 0;
+    if (previousHighPointTime===0){//this should only happen the first time this function is called during an exercise, since we have no spikes yet
+        previousHighPointTime=recentAccelerationData[0].time;//just assume the timestamp of the first sensor reading is good enough to compare with for noise elimination
+    }
     recentAccelerationData.forEach((accelerationDatum) => {
         
         if (accelerationDatum.value > previousValue && previousValue!=0){
@@ -51,7 +52,7 @@ const getSpikesFromAccelerometer = (recentAccelerationData, threshold = 11) =>{
             console.log("Previous Value: "+previousValue);
             console.log("Value: "+accelerationDatum.value);
         } else {
-            if (goingUp=true && previousTime !=0 && accelerationDatum.time-previousTime > 400 && previousValue > threshold){
+            if (goingUp===true && (accelerationDatum.time-previousHighPointTime > 400 || previousHighPointTime==0) && previousValue > threshold){
                 console.log("Found spike!");
                 overThresholdSpikes.push(accelerationDatum);
                 previousHighPointTime = accelerationDatum.time;
@@ -60,13 +61,12 @@ const getSpikesFromAccelerometer = (recentAccelerationData, threshold = 11) =>{
             console.log("Previous Value: "+previousValue);
             console.log("Value: "+accelerationDatum.value);
 
-        }        
-        previousTime= accelerationDatum.time;
+        }       
         previousValue = accelerationDatum.value;
     });
 
     console.log("Spike Count: "+overThresholdSpikes.length);
-    return overThresholdSpikes;
+    return {spikes: overThresholdSpikes, previousHighPointTime};
 
 }
 
