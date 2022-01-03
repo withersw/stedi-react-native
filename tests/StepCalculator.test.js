@@ -8,6 +8,7 @@ let previousHighPoint = 0;
 let previousValue = 0;//we process every 20 measurements, and this will be the 20th measurement from the last time we processed    
 let previousHighPointTime = 0; //this is the most recent time we had a spike in acceleration, we initialize it to 0 meaning none
 let spikes = [];//these are the readings where a local max is reached of acceleration over time, and where the local maximum is at least 400 milliseconds after the previous local maximum
+let wasGoingUp = false;//in the last round of data we evaluated, was the last reading higher than the previous (trending up)?
 
 //every 20 readings the StepCalculator is called, below are the sample readings:
 const accelerometerReadings = [];
@@ -26,18 +27,21 @@ accelerometerReadings.push([{"time":1640879384520,"value":8.206196703530141},{"t
 accelerometerReadings.push([{"time":1640879386786,"value":10.415883736613234},{"time":1640879386866,"value":7.405597481325926},{"time":1640879386968,"value":6.295716219924954},{"time":1640879387070,"value":10.194632134421965},{"time":1640879387172,"value":13.90074791676458},{"time":1640879387274,"value":6.294564156695985},{"time":1640879387379,"value":10.697262205306167},{"time":1640879387479,"value":7.2351284609574416},{"time":1640879387584,"value":13.744753762511671},{"time":1640879387685,"value":14.736615805922618},{"time":1640879387786,"value":10.204022142932764},{"time":1640879387890,"value":9.34579406077321},{"time":1640879387988,"value":6.793155687761767},{"time":1640879388091,"value":9.068847857876225},{"time":1640879388194,"value":19.858337199906178},{"time":1640879388295,"value":4.978078022688308},{"time":1640879388395,"value":12.654244455499068},{"time":1640879388500,"value":8.077650855119295},{"time":1640879388602,"value":10.210793429401551},{"time":1640879388701,"value":7.942571934006269}]);
 accelerometerReadings.push([{"time":1640879389021,"value":9.160953650124068},{"time":1640879389108,"value":9.26540899885626},{"time":1640879389211,"value":9.962745254705048},{"time":1640879389313,"value":9.982748032296714},{"time":1640879389415,"value":10.07010064273405},{"time":1640879389517,"value":9.8773881627922},{"time":1640879389622,"value":10.092557326242922},{"time":1640879389725,"value":10.013761404794637},{"time":1640879389824,"value":9.648155836094764},{"time":1640879389924,"value":9.90564111177008},{"time":1640879390027,"value":10.038585052230255},{"time":1640879390126,"value":9.995812650277408},{"time":1640879390228,"value":9.905559997603225},{"time":1640879390331,"value":9.09840999501093},{"time":1640879390434,"value":9.227418616383767},{"time":1640879390535,"value":9.837178713168235},{"time":1640879390637,"value":9.83680446154118},{"time":1640879390740,"value":10.07548339355267},{"time":1640879390841,"value":10.065512195553742},{"time":1640879390943,"value":9.649957452354014}]);
 
-accelerometerReadings.forEach((recentAccelerationData)=>{
-    previousValue = recentAccelerationData[recentAccelerationData.length-1];
-    console.log("New Previous Value from calling program: "+previousValue);
-    ({spikes, previousHighPointTime} = getSpikesFromAccelerometer({recentAccelerationData, threshold:11, previousValue, previousHighPointTime}));
-    console.log("New Previous High Point Time from calling program: "+previousHighPointTime);
-    steps = steps.concat(spikes);
-    console.log("Steps: "+steps.length);
+accelerometerReadings.forEach((accelerometerReading)=>{
+    console.log(accelerometerReading.time+","+accelerometerReading.value);
+})
+// accelerometerReadings.forEach((recentAccelerationData)=>{
+//     console.log("New Previous Value from calling program: "+previousValue);
+//     ({spikes, previousHighPointTime, wasGoingUp} = getSpikesFromAccelerometer({recentAccelerationData, threshold:11, previousValue, previousHighPointTime, wasGoingUp}));
+//     previousValue = recentAccelerationData[recentAccelerationData.length-1].value;
+//     console.log("New Previous High Point Time from calling program: "+previousHighPointTime);
+//     steps = steps.concat(spikes);
+//     console.log("Steps: "+steps.length);
     
-});
+// });
 
 
-expect(steps.length).toBe(60);//this is because for each step we step forward and then back, so 30 steps should be 60
+// expect(steps.length).toBe(60);//this is because for each step we step forward and then back, so 30 steps should be 60
 
 
 });

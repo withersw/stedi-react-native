@@ -1,4 +1,4 @@
-const getSpikesFromAccelerometer = ({recentAccelerationData, threshold, previousValue, previousHighPointTime}) =>{
+const getSpikesFromAccelerometer = ({recentAccelerationData, threshold, previousValue, previousHighPointTime, wasGoingUp}) =>{
     console.log("Spike Calculator Called");
     const overThresholdSpikes = [];//the acceleration data, often look like the following, can you find the spike(s) over the default threshold
 /*
@@ -39,13 +39,13 @@ const getSpikesFromAccelerometer = ({recentAccelerationData, threshold, previous
      -------
      */
 
-    let goingUp=false;//when we stop going up, we have hit a spike
+    let goingUp=wasGoingUp;//when we stop going up, we have hit a spike
     //let previousValue = 0;//this is not a real value
     if (previousHighPointTime===0){//this should only happen the first time this function is called during an exercise, since we have no spikes yet
         previousHighPointTime=recentAccelerationData[0].time;//just assume the timestamp of the first sensor reading is good enough to compare with for noise elimination
     }
     recentAccelerationData.forEach((accelerationDatum) => {
-        
+
         if (accelerationDatum.value > previousValue && previousValue!=0){
             goingUp = true;
             console.log("Going UP: "+goingUp );
@@ -66,7 +66,7 @@ const getSpikesFromAccelerometer = ({recentAccelerationData, threshold, previous
     });
 
     console.log("Spike Count: "+overThresholdSpikes.length);
-    return {spikes: overThresholdSpikes, previousHighPointTime};
+    return {spikes: overThresholdSpikes, previousHighPointTime, wasGoingUp:goingUp};
 
 }
 
