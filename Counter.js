@@ -14,6 +14,7 @@ export default function Counter() {
   const [subscription, setSubscription] = useState(null);
   const recentAccelerationData = useRef([]);//useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
   const steps = useRef([]);//useRef returns a mutable ref object whose .current property is initialized to the passed argument (initialValue). The returned object will persist for the full lifetime of the component.
+  const [stepCount, setStepCount] = useState(0);
   const previousHighPointTimeRef = useRef(0);//this is the most recent time we had a spike in acceleration, we initialize it to 0 meaning none
   const previousValue = useRef(0);//we process every 20 measurements, and this will be the 20th measurement from the previous time we processed data, start it at 0
 
@@ -33,7 +34,9 @@ export default function Counter() {
     (async () => {
       await Accelerometer.isAvailableAsync(); //this seems to initialize the Accelerometer for Android
     })(); //check if Acceleromoter is available
-
+    setStepCount(0);
+    recentAccelerationData.current=[];
+    steps.current=[];
     setSubscription( //we set this state variable so later we can use it to unsubscribe
       Accelerometer.addListener((accelerometerData) => {
         data.current=accelerometerData;
@@ -42,25 +45,30 @@ export default function Counter() {
         let total_amount_xyz = Math.sqrt(x * x+ y*y + z*z) * 9.81;
         console.log(new Date().getTime()+","+total_amount_xyz);
         console.log("Steps: "+steps.current.length);
+        recentAccelerationData.current.push({time: new Date().getTime(), value: total_amount_xyz});
+
         if (recentAccelerationData.current.length>20){
-          const {spikes, previousHighPointTime} = getSpikesFromAccelerometer({recentAccelerationData: recentAccelerationData.current, threshold: 11, previousValue: previousValue.current, previousHighPointTime: previousHighPointTimeRef.current});
-          previousValue.current = recentAccelerationData.current[recentAccelerationData.current.length-1].value;//store this for when we need to remember the last value
-          previousHighPointTimeRef.current = previousHighPointTime;
-          console.log("Spikes: "+JSON.stringify(spikes)+ " with length: "+spikes.length);
-          console.log("Steps before: "+steps.current.length);
-          steps.current=steps.current.concat(spikes);
-          console.log("Steps after: "+steps.current.length);
-          recentAccelerationData.current=[];
-        } else{
-          console.log("RecentAccelerationData: "+JSON.stringify(recentAccelerationData.current));
-          recentAccelerationData.current.push({time: new Date().getTime(), value: total_amount_xyz});
-          
-        }
+          tallyLatestSteps();
+        } 
       })
     );
   };
 
+  const tallyLatestSteps= ()=>{
+    console.log("RecentAccelerationData: "+JSON.stringify(recentAccelerationData.current));
+    const {spikes, previousHighPointTime} = getSpikesFromAccelerometer({recentAccelerationData: recentAccelerationData.current, threshold: 11, previousValue: previousValue.current, previousHighPointTime: previousHighPointTimeRef.current});
+    previousValue.current = recentAccelerationData.current[recentAccelerationData.current.length-1].value;//store this for when we need to remember the last value
+    previousHighPointTimeRef.current = previousHighPointTime;
+    console.log("Spikes: "+JSON.stringify(spikes)+ " with length: "+spikes.length);
+    console.log("Steps before: "+steps.current.length);
+    steps.current=steps.current.concat(spikes);
+    setStepCount(steps.current.length);
+    console.log("Steps after: "+steps.current.length);
+    recentAccelerationData.current=[];
+  }
+
   const _unsubscribe = () => {
+    tallyLatestSteps();//count the last remaining steps before unsubscribing
     subscription && subscription.remove();
     setSubscription(null);
   };
@@ -82,7 +90,7 @@ export default function Counter() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>
-       steps: {steps.current.length}
+       steps: {stepCount}
       </Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
