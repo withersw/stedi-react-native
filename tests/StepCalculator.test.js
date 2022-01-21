@@ -5,7 +5,6 @@ it ("Should Show 60 Steps Taken", ()=>{
 
 
 let steps = [];
-let previousHighPoint = 0;
 let previousValue = 0;//we process every 20 measurements, and this will be the 20th measurement from the last time we processed    
 let previousHighPointTime = 0; //this is the most recent time we had a spike in acceleration, we initialize it to 0 meaning none
 let spikes = [];//these are the readings where a local max is reached of acceleration over time, and where the local maximum is at least 400 milliseconds after the previous local maximum
@@ -32,19 +31,19 @@ accelerometerReadings.push([{"time":1642432182729,"value":10.72156377514051},{"t
 accelerometerReadings.push([{"time":1642432184880,"value":12.42394159887942},{"time":1642432184915,"value":11.205143348845725},{"time":1642432185020,"value":8.421025240773409},{"time":1642432185120,"value":10.346208629222684},{"time":1642432185222,"value":7.553806288162612},{"time":1642432185324,"value":9.275670716832957},{"time":1642432185427,"value":9.774249677451607},{"time":1642432185529,"value":11.74667365007606},{"time":1642432185631,"value":8.461907606552776},{"time":1642432185733,"value":9.206666233267304},{"time":1642432185834,"value":8.819454233068456},{"time":1642432185937,"value":16.007496900417596},{"time":1642432186039,"value":12.215091885492225},{"time":1642432186141,"value":10.622115972981241},{"time":1642432186243,"value":7.673834645718369},{"time":1642432186345,"value":7.386640095383668},{"time":1642432186447,"value":8.695946899446941},{"time":1642432186549,"value":9.275519263425211},{"time":1642432186651,"value":13.257152241234916},{"time":1642432186753,"value":12.15541573448971},{"time":1642432186859,"value":9.692722532539106}]);
 accelerometerReadings.push([{"time":1642432187015,"value":8.532964076634846},{"time":1642432187057,"value":8.238032446809614},{"time":1642432187160,"value":10.329273186719663},{"time":1642432187263,"value":10.452658647794028},{"time":1642432187365,"value":13.807365771138768},{"time":1642432187465,"value":9.550686826148432}]);
 
-const csvWriter = createObjectCsvWriter({
-    path:'stepdata3.csv',
-    header: [
-        {id: 'time', title: 'Timestamp'},
-        {id: 'value', title: 'Value'},
-    ]
-});
+// const csvWriter = createObjectCsvWriter({
+//     path:'stepdata3.csv',
+//     header: [
+//         {id: 'time', title: 'Timestamp'},
+//         {id: 'value', title: 'Value'},
+//     ]
+// });
 
-const singleLevelArrayOfReadings = [].concat.apply([],accelerometerReadings);
+// const singleLevelArrayOfReadings = [].concat.apply([],accelerometerReadings);
 
-csvWriter
-    .writeRecords(singleLevelArrayOfReadings)
-    .then(() => console.log('Wrote CSV successfully'));
+// csvWriter
+//     .writeRecords(singleLevelArrayOfReadings)
+//     .then(() => console.log('Wrote CSV successfully'));
 
 accelerometerReadings.forEach((recentAccelerationData)=>{
     console.log("New Previous Value from calling program: "+previousValue);
@@ -56,7 +55,7 @@ accelerometerReadings.forEach((recentAccelerationData)=>{
     
 });
 
-
+console.log(JSON.stringify(steps));
 expect(steps.length).toBe(60);//this is because for each step we step forward and then back, so 30 steps should be 60
 
 
