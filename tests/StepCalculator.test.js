@@ -5,7 +5,6 @@ it ("Should Show 60 Steps Taken", ()=>{
 
 
 let steps = [];
-let previousHighPoint = 0;
 let previousValue = 0;//we process every 20 measurements, and this will be the 20th measurement from the last time we processed    
 let previousHighPointTime = 0; //this is the most recent time we had a spike in acceleration, we initialize it to 0 meaning none
 let spikes = [];//these are the readings where a local max is reached of acceleration over time, and where the local maximum is at least 400 milliseconds after the previous local maximum
