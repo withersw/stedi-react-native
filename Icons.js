@@ -20,7 +20,7 @@ const Icons = () => {
       <Card style={styles.card}>
         <Image source={require('./image/STEDITimer.png')}></Image>
       </Card>
-      <Card>
+      <Card style={styles.card}>
         <Image source={require('./image/Tutorial.png')}></Image>
       </Card>
     </View>
@@ -30,22 +30,10 @@ const Icons = () => {
 export default Icons;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#66FF66',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
   icons: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignContent: 'center',
+    height: '85%'
   },
-
-  card: {
-    margin: '12em',
-  },
-
 });

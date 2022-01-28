@@ -18,10 +18,13 @@ const styles = StyleSheet.create({
     bar: {
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         backgroundColor: 'green',
-        height: '15%',
-        alignItems: 'center',
+        height: '12%',
+        alignItems: 'flex-end',
+        paddingBottom: 5,
+        paddingLeft: 10,
+        paddingRight: 10,
         
       },
 })
