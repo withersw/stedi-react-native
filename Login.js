@@ -7,6 +7,7 @@ const UselessTextInput = () => {
 
   let True = true
 
+export default function Login(props){
   return (
     <SafeAreaView>
       <TextInput
@@ -24,16 +25,15 @@ const UselessTextInput = () => {
         keyboardType="Alphanumeric"
       />
       <Button
-  onPress={false}
+  onPress={setUserLoggedIn(true)}
   title="Login"
-  color=""
-  accessibilityLabel="Learn more about this button"
+  
 />
     </SafeAreaView>
     
   );
 };
-
+}
 const styles = StyleSheet.create({
   input: {
     height: 40,
