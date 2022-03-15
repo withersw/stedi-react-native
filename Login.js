@@ -16,14 +16,19 @@ export default function Login(props){
         keyboardType="numeric"
       />
       <Button title="Send One Time Password" onPress={()=>sendCode(text)}></Button>
+
       <TextInput
         style={styles.input}
         onChangeText={onChangeNumber}
         value={number}
         placeholder="One Time Password"
-        keyboardType="Alphanumeric"
+        keyboardType="numeric"
       />
-      <Button title="log In" onPress={()=>props.setUserLoggedIn(true)}></Button>
+      <Button title="log In" onPress={()=>{
+        
+        props.setUserLoggedIn(true)}}>
+
+        </Button>
     </SafeAreaView>
     
   );
@@ -40,6 +45,11 @@ const styles = StyleSheet.create({
 
 function sendCode(phoneNumber) {
   fetch(('https://dev.stedi.me/twofactorlogin/' + phoneNumber), {
-    method: 'POST'
+  method: 'POST',
+  headers:{
+    Accept:"application/json",
+    "Content-Type":"application/json"
+  },
+  //body: JSON.stringify
   });
 }
