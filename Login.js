@@ -43,13 +43,33 @@ const styles = StyleSheet.create({
   },
 });
 
-function sendCode(phoneNumber) {
-  fetch(('https://dev.stedi.me/twofactorlogin/' + phoneNumber), {
+function sendCode = async (phoneNumber) =>{
+  await fetch(('https://dev.stedi.me/twofactorlogin/' + phoneNumber), {
   method: 'POST',
   headers:{
     Accept:"application/json",
-    "Content-Type":"application/json"
+    "Content-Type": "application/json"
   },
   //body: JSON.stringify
   });
 }
+
+function checkCode = async (phoneNumber, OneTimePassword) => {
+  await fetch('https://dev.stedi.me/twofactorlogin/', {
+    method: 'POST',
+    headers:{
+      Accept:"application/json",
+      "Content-Type":"application/json",
+
+      OneTimePassword: OneTimePassword,
+      phoneNumber: phoneNumber,
+    },
+    body: {
+      phoneNumber: phoneNumber,
+      OneTimePassword: OneTimePassword,
+    }
+  })
+  
+  };
+  
+
