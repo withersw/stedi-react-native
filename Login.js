@@ -24,9 +24,9 @@ export default function Login(props){
         placeholder="One Time Password"
         keyboardType="numeric"
       />
-      <Button title="log In" onPress={()=>{
+      <Button title="log In" onPress={()=>
         
-        props.setUserLoggedIn(true)}}>
+        checkCode(text, number, props)}>
 
         </Button>
     </SafeAreaView>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function sendCode = async (phoneNumber) =>{
+async function sendCode (phoneNumber) {
   await fetch(('https://dev.stedi.me/twofactorlogin/' + phoneNumber), {
   method: 'POST',
   headers:{
@@ -54,21 +54,25 @@ function sendCode = async (phoneNumber) =>{
   });
 }
 
-function checkCode = async (phoneNumber, OneTimePassword) => {
-  await fetch('https://dev.stedi.me/twofactorlogin/', {
+async function checkCode (phoneNumber, oneTimePassword, props) {
+  const token = await fetch('https://dev.stedi.me/twofactorlogin/', {
     method: 'POST',
     headers:{
-      Accept:"application/json",
-      "Content-Type":"application/json",
-
-      OneTimePassword: OneTimePassword,
-      phoneNumber: phoneNumber,
+      Accept:"application/text",
+      "Content-Type":"application/text",
     },
-    body: {
-      phoneNumber: phoneNumber,
-      OneTimePassword: OneTimePassword,
-    }
+    body: JSON.stringify ({
+      phoneNumber: 2083139610,
+      oneTimePassword: 2057,
+    })
   })
+  .catch(error => {
+    console.Console.log(error)
+  })
+  if (token.status == 200) {
+    props.setUserLoggedIn(true);
+  }
+  console.log (token.status);
   
   };
   
