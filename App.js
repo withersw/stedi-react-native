@@ -30,7 +30,6 @@ export default function App() {
         <Tab.Screen
           name='Home'
           children={() => <Home userEmail={userEmail}/>}
-          component={Home}
           options={{
             tabBarLabel: 'Home',
             tabBarIcon: ({ color }) => (

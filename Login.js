@@ -1,3 +1,4 @@
+// @ts = check
 import React from "react";
 import { SafeAreaView, StyleSheet, TextInput, Button } from "react-native";
 
@@ -50,30 +51,47 @@ async function sendCode (phoneNumber) {
     Accept:"application/json",
     "Content-Type": "application/json"
   },
-  //body: JSON.stringify
   });
 }
 
 async function checkCode (phoneNumber, oneTimePassword, props) {
-  const token = await fetch('https://dev.stedi.me/twofactorlogin/', {
+  let token = "";
+  try {
+  let response = await fetch('https://dev.stedi.me/twofactorlogin', {
     method: 'POST',
     headers:{
       Accept:"application/text",
       "Content-Type":"application/text",
     },
     body: JSON.stringify ({
-      phoneNumber: 2083139610,
-      oneTimePassword: 2057,
-    })
+      phoneNumber: phoneNumber,
+      oneTimePassword: oneTimePassword,
+    }),
+    
   })
-  .catch(error => {
-    console.Console.log(error)
-  })
-  if (token.status == 200) {
+  token = await response.text()
+  if (response.status == 200) {
     props.setUserLoggedIn(true);
   }
-  console.log (token.status);
-  
-  };
+  console.log (response.status);
+}
+  catch(error){
+    console.log(error)
+  }
+
+  try {
+  let response = await fetch('https://dev.stedi.me/validate/' + token, {
+    method: 'GET',
+    headers: {
+      Accept:"application/text",
+      "Content-Type":"application/text"
+    }
+  })
+    const email = await response.text();
+    props.setUserEmail(email);
+}
+  catch(error){
+    console.log(error)
+}};
   
 
